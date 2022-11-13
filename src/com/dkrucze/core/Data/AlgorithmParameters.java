@@ -4,12 +4,12 @@ public class AlgorithmParameters {
     /** Name of edge detection algorithm used */
     private String name;
     /** Time of processing in ms divided by image size */
-    private float time;
+    private double time;
     /** Amount of edged detected */
     //TODO calculate based on size,contrast,noise,blur and detected edges
-    private float edges;
+    private double edges;
     /** Overall performance of the algorithm */
-    private float performanceFactor;
+    private double performanceFactor;
 
     @Override
     public String toString() {
@@ -21,7 +21,7 @@ public class AlgorithmParameters {
                 '}';
     }
 
-    public AlgorithmParameters(String name, float time, float edges) {
+    public AlgorithmParameters(String name, double time, double edges) {
         this.name = name;
         this.time = time;
         this.edges = edges;
@@ -37,27 +37,27 @@ public class AlgorithmParameters {
         this.name = name;
     }
 
-    public float getTime() {
+    public double getTime() {
         return time;
     }
 
-    public void setTime(float time) {
+    public void setTime(double time) {
         this.time = time;
     }
 
-    public float getEdges() {
+    public double getEdges() {
         return edges;
     }
 
-    public void setEdges(float edges) {
+    public void setEdges(double edges) {
         this.edges = edges;
     }
 
-    public float getPerformanceFactor() {
+    public double getPerformanceFactor() {
         return performanceFactor;
     }
 
-    public void setPerformanceFactor(float performanceFactor) {
+    public void setPerformanceFactor(double performanceFactor) {
         this.performanceFactor = performanceFactor;
     }
 }

@@ -8,11 +8,11 @@ public class ImageParameters {
     /** Number of pixels in the image */
     private int size;
     /** Amount of noise in image */
-    private float noise;
+    private double noise;
     /** Sharpness of the image, higher number means sharper image */
-    private float blur;
+    private double blur;
     /** Contrast of the image, range from 0 to 1 */
-    private float contrast;
+    private double contrast;
     /** Performance of different edge detection algorithms on this image */
     private ArrayList<AlgorithmParameters> algorithms;
 
@@ -28,7 +28,7 @@ public class ImageParameters {
                 '}';
     }
 
-    public ImageParameters(String name, int size, float noise, float blur, float contrast) {
+    public ImageParameters(String name, int size, double noise, double blur, double contrast) {
         this.name = name;
         this.size = size;
         this.noise = noise;
@@ -58,27 +58,27 @@ public class ImageParameters {
         this.size = size;
     }
 
-    public float getNoise() {
+    public double getNoise() {
         return noise;
     }
 
-    public void setNoise(float noise) {
+    public void setNoise(double noise) {
         this.noise = noise;
     }
 
-    public float getBlur() {
+    public double getBlur() {
         return blur;
     }
 
-    public void setBlur(float blur) {
+    public void setBlur(double blur) {
         this.blur = blur;
     }
 
-    public float getContrast() {
+    public double getContrast() {
         return contrast;
     }
 
-    public void setContrast(float contrast) {
+    public void setContrast(double contrast) {
         this.contrast = contrast;
     }
 
