@@ -1,15 +1,11 @@
 import com.dkrucze.core.Data.ImageParameters;
 import com.dkrucze.core.Util.Analyzer;
 import com.dkrucze.core.Util.ImageLoader;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfDouble;
-import org.opencv.core.Size;
+import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class MainClass {
@@ -20,6 +16,22 @@ public class MainClass {
     public static void main(String[] args) {
         //Variables
         ArrayList<ImageParameters> outputData = new ArrayList<>();
+
+        //Variance of Laplacian matrix
+        Mat laplacian = new Mat(3,3, CvType.CV_32F);
+        laplacian.put(0,0, 0);
+        laplacian.put(0,1, 1);
+        laplacian.put(0,2, 0);
+        laplacian.put(1,0, 1);
+        laplacian.put(1,1, -4);
+        laplacian.put(1,2, 1);
+        laplacian.put(2,0, 0);
+        laplacian.put(2,1, 1);
+        laplacian.put(2,2, 0);
+        //Created matrix:
+        // 0  1  0
+        // 1 -4  1
+        // 0  1  0
 
         //Load all the images from images folder
         ArrayList<String> imagesPaths = ImageLoader.loadFiles("images");
@@ -45,17 +57,15 @@ public class MainClass {
 
             //-----------------------------Image noise-----------------------------
             //Variables for noise calculation
-            MatOfDouble sourceMean = new MatOfDouble();
             MatOfDouble sourceStdDev = new MatOfDouble();
-            MatOfDouble smoothMean = new MatOfDouble();
             MatOfDouble smoothStdDev = new MatOfDouble();
 
             //Blur the source image
             Imgproc.blur(img,tmp,new Size(5,5));
 
             //Calculate the standard deviation of source and blurred image
-            Core.meanStdDev(img,sourceMean,sourceStdDev);
-            Core.meanStdDev(tmp,smoothMean,smoothStdDev);
+            Core.meanStdDev(img,new MatOfDouble(),sourceStdDev);
+            Core.meanStdDev(tmp,new MatOfDouble(),smoothStdDev);
 
             //Calculate the noise by comparing both deviations
             //More noise = higher deviation
@@ -63,19 +73,25 @@ public class MainClass {
             //Save the result
             parameters.setNoise(noise);
 
-            //-----------------------------Image blur-----------------------------
-            //TODO calculate image blur
+            //-----------------------------Image focus-----------------------------
+            //Convolve image with Laplacian
+            Imgproc.filter2D(img,tmp,0, laplacian);
+            //Calculate the standard deviation of image
+            MatOfDouble focus = new MatOfDouble();
+            Core.meanStdDev(tmp,new MatOfDouble(),focus);
+            //Set focus equal to deviation
+            parameters.setFocus(focus.get(0,0)[0]);
 
             //-----------------------------Image contrast-----------------------------
-            //TODO compare result of Weber and Michelson contrasts, pick better one out of the three
             //Calculate the RMS contrast and normalize it
-            double contrast = sourceStdDev.get(0,0)[0]/255.0;
+            //RMS contrast is the same as standard deviation of colors
+            //Maximum value is 127.5 which is half of the spectrum
+            double contrast = sourceStdDev.get(0,0)[0]/(255.0/2);
             //Save the result
             parameters.setContrast(contrast);
 
-            System.out.println(parameters.getName()+" "+parameters.getNoise()+" "+parameters.getBlur()+" "+parameters.getContrast());
 
-
+            //-----------------------------Algorithms-----------------------------
             //Analyze the performance of different edge detection algorithms
             Analyzer algorithmsAnalyzer = new Analyzer(img);
             parameters.setAlgorithms(algorithmsAnalyzer.analyze());
@@ -86,6 +102,6 @@ public class MainClass {
 
         //TODO write custom object to csv converter?
         //TODO or save it as a JSON using toString methods?
-        outputData.stream().forEach(System.out::println);
+        outputData.forEach(System.out::println);
     }
 }

@@ -10,7 +10,7 @@ public class ImageParameters {
     /** Amount of noise in image */
     private double noise;
     /** Sharpness of the image, higher number means sharper image */
-    private double blur;
+    private double focus;
     /** Contrast of the image, range from 0 to 1 */
     private double contrast;
     /** Performance of different edge detection algorithms on this image */
@@ -22,17 +22,17 @@ public class ImageParameters {
                 "name='" + name + '\'' +
                 ", size=" + size +
                 ", noise=" + noise +
-                ", blur=" + blur +
+                ", blur=" + focus +
                 ", contrast=" + contrast +
                 ", algorithms=" + algorithms +
                 '}';
     }
 
-    public ImageParameters(String name, int size, double noise, double blur, double contrast) {
+    public ImageParameters(String name, int size, double noise, double focus, double contrast) {
         this.name = name;
         this.size = size;
         this.noise = noise;
-        this.blur = blur;
+        this.focus = focus;
 
         this.contrast = contrast;
         algorithms=new ArrayList<>();
@@ -66,12 +66,12 @@ public class ImageParameters {
         this.noise = noise;
     }
 
-    public double getBlur() {
-        return blur;
+    public double getFocus() {
+        return focus;
     }
 
-    public void setBlur(double blur) {
-        this.blur = blur;
+    public void setFocus(double focus) {
+        this.focus = focus;
     }
 
     public double getContrast() {
