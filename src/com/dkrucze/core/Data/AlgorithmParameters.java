@@ -5,10 +5,9 @@ public class AlgorithmParameters {
     private String name;
     /** Time of processing in ms divided by image size */
     private double time;
-    /** Amount of edged detected */
-    //TODO calculate based on size,contrast,noise,blur and detected edges
+    /** Amount of edged detected, 0-127.5 Higher value means more edges detected */
     private double edges;
-    /** Overall performance of the algorithm */
+    /** Overall performance of the algorithm on given image */
     private double performanceFactor;
 
     @Override
@@ -21,12 +20,11 @@ public class AlgorithmParameters {
                 '}';
     }
 
-    public AlgorithmParameters(String name, double time, double edges) {
+    public AlgorithmParameters(String name, double time, double edges, double performanceFactor) {
         this.name = name;
         this.time = time;
         this.edges = edges;
-        //TODO calculate based on time and edges
-        this.performanceFactor = 0;
+        this.performanceFactor = performanceFactor;
     }
 
     public String getName() {

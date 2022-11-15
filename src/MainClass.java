@@ -17,22 +17,6 @@ public class MainClass {
         //Variables
         ArrayList<ImageParameters> outputData = new ArrayList<>();
 
-        //Variance of Laplacian matrix
-        Mat laplacian = new Mat(3,3, CvType.CV_32F);
-        laplacian.put(0,0, 0);
-        laplacian.put(0,1, 1);
-        laplacian.put(0,2, 0);
-        laplacian.put(1,0, 1);
-        laplacian.put(1,1, -4);
-        laplacian.put(1,2, 1);
-        laplacian.put(2,0, 0);
-        laplacian.put(2,1, 1);
-        laplacian.put(2,2, 0);
-        //Created matrix:
-        // 0  1  0
-        // 1 -4  1
-        // 0  1  0
-
         //Load all the images from images folder
         ArrayList<String> imagesPaths = ImageLoader.loadFiles("images");
 
@@ -75,7 +59,7 @@ public class MainClass {
 
             //-----------------------------Image focus-----------------------------
             //Convolve image with Laplacian
-            Imgproc.filter2D(img,tmp,0, laplacian);
+            Imgproc.Laplacian(img,tmp,0);
             //Calculate the standard deviation of image
             MatOfDouble focus = new MatOfDouble();
             Core.meanStdDev(tmp,new MatOfDouble(),focus);
@@ -93,11 +77,12 @@ public class MainClass {
 
             //-----------------------------Algorithms-----------------------------
             //Analyze the performance of different edge detection algorithms
-            Analyzer algorithmsAnalyzer = new Analyzer(img);
-            parameters.setAlgorithms(algorithmsAnalyzer.analyze());
+            Analyzer algorithmsAnalyzer = new Analyzer(img,parameters);
+            algorithmsAnalyzer.analyze();
 
             //Save file parameters
             outputData.add(parameters);
+
         }
 
         //TODO write custom object to csv converter?

@@ -7,11 +7,11 @@ public class ImageParameters {
     private String name;
     /** Number of pixels in the image */
     private int size;
-    /** Amount of noise in image */
+    /** Amount of noise in image, value starts from 1. Higher value means more noise. */
     private double noise;
-    /** Sharpness of the image, higher number means sharper image */
+    /** Sharpness of the image, higher number means sharper image. Range is 0-127.5 */
     private double focus;
-    /** Contrast of the image, range from 0 to 1 */
+    /** Contrast of the image, range from 0 to 1 , higher value means better contrast*/
     private double contrast;
     /** Performance of different edge detection algorithms on this image */
     private ArrayList<AlgorithmParameters> algorithms;
@@ -22,7 +22,7 @@ public class ImageParameters {
                 "name='" + name + '\'' +
                 ", size=" + size +
                 ", noise=" + noise +
-                ", blur=" + focus +
+                ", focus=" + focus +
                 ", contrast=" + contrast +
                 ", algorithms=" + algorithms +
                 '}';
