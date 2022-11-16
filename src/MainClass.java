@@ -59,7 +59,7 @@ public class MainClass {
 
             //-----------------------------Image focus-----------------------------
             //Convolve image with Laplacian
-            Imgproc.Laplacian(img,tmp,0);
+            Imgproc.Laplacian(img,tmp,-1);
             //Calculate the standard deviation of image
             MatOfDouble focus = new MatOfDouble();
             Core.meanStdDev(tmp,new MatOfDouble(),focus);
