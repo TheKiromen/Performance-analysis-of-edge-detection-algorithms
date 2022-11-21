@@ -1,3 +1,4 @@
+import com.dkrucze.core.Data.AlgorithmParameters;
 import com.dkrucze.core.Data.ImageParameters;
 import com.dkrucze.core.Util.Analyzer;
 import com.dkrucze.core.Util.ImageLoader;
@@ -83,10 +84,22 @@ public class MainClass {
             //Save file parameters
             outputData.add(parameters);
 
+            //Display best performing algorithm
+            double max=0.0;
+            String name="";
+            double time=0;
+            for (AlgorithmParameters p : parameters.getAlgorithms()) {
+                if(p.getPerformanceFactor()>max){
+                    max=p.getPerformanceFactor();
+                    name=p.getName();
+                    time=p.getTime();
+                }
+            }
+            System.out.println(parameters.getName()+" "+name+" "+max+" "+time);
         }
 
         //TODO write custom object to csv converter?
         //TODO or save it as a JSON using toString methods?
-        outputData.forEach(System.out::println);
+        //outputData.forEach(System.out::println);
     }
 }
