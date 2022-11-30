@@ -179,6 +179,6 @@ public class Analyzer {
         imgData.getAlgorithms().add(new AlgorithmParameters("Canny",time,edges,performanceFactor));
 
         //Save the image for testing purposes
-        //Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);
     }
 }

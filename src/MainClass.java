@@ -85,17 +85,21 @@ public class MainClass {
             outputData.add(parameters);
 
             //Display best performing algorithm
-            double max=0.0;
-            String name="";
-            double time=0;
-            for (AlgorithmParameters p : parameters.getAlgorithms()) {
-                if(p.getPerformanceFactor()>max){
-                    max=p.getPerformanceFactor();
-                    name=p.getName();
-                    time=p.getTime();
-                }
-            }
-            System.out.println(parameters.getName()+" "+name+" "+max+" "+time);
+            //double max=0.0;
+            //String name="";
+            //double time=0;
+            //for (AlgorithmParameters p : parameters.getAlgorithms()) {
+            //    if(p.getPerformanceFactor()>max){
+            //        max=p.getPerformanceFactor();
+            //        name=p.getName();
+            //        time=p.getTime();
+            //    }
+            //}
+            //System.out.println(parameters.getName()+" "+name+" "+max+" "+time);
+
+
+            //Display canny results
+            System.out.println(parameters.getName()+"   Canny: "+parameters.getAlgorithms().get(5).getEdges());
         }
 
         //TODO write custom object to csv converter?
