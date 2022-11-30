@@ -7,6 +7,7 @@ It analyzes all provided images and return the result which allows for analysis 
 ## Documentation
 
 Application measures the amount of noise in the image, focus and contrast.
+
 Then on smoothed, grayscale image it performs various edge detection algorithms and measures their performance.
 
 Implemented Edge Detection algorithms are:
@@ -18,6 +19,7 @@ Implemented Edge Detection algorithms are:
 - Canny
 
 Overall performance of algorithm is calculated accoring to this formula:
+
 performance = (detected edges * contrast) / (time * noise * focus) 
 
 
