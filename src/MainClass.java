@@ -1,12 +1,16 @@
 import com.dkrucze.core.Data.AlgorithmParameters;
 import com.dkrucze.core.Data.ImageParameters;
 import com.dkrucze.core.Util.Analyzer;
+import com.dkrucze.core.Util.CSVConverter;
 import com.dkrucze.core.Util.ImageLoader;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainClass {
@@ -99,11 +103,16 @@ public class MainClass {
 
 
             //Display canny results
-            System.out.println(parameters.getName()+"   Canny: "+parameters.getAlgorithms().get(5).getEdges());
+            // System.out.println(parameters.getName()+"   Canny: "+parameters.getAlgorithms().get(5).getEdges());
         }
 
-        //TODO write custom object to csv converter?
-        //TODO or save it as a JSON using toString methods?
-        //outputData.forEach(System.out::println);
+        //Save data to csv file.
+        CSVConverter converter = new CSVConverter(outputData);
+        List<String> csvData = converter.convertToCSV();
+        try {
+            converter.saveCSVDataToFile(new File("output/data.csv"), csvData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

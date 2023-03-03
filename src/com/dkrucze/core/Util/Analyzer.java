@@ -170,9 +170,7 @@ public class Analyzer {
         time=(System.nanoTime()-time)/1000000.0;
         //Calculate the amount of detected edges
         Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
-        //Reduce the weight of the edges/
-        //This is due to the fact that Canny only produces maximum intensity pixels which inflates the standard deviation
-        edges=stDev.get(0,0)[0]/2;
+        edges=stDev.get(0,0)[0];
         //Calculate the overall performance of the algorithm
         performanceFactor=(edges*imgData.getContrast())/(time*imgData.getNoise()*imgData.getFocus());
         //Save the results
