@@ -1,5 +1,6 @@
 package com.dkrucze.core.Util;
 
+import com.dkrucze.core.Data.AlgorithmParameters;
 import com.dkrucze.core.Data.ImageParameters;
 
 import java.io.File;
@@ -23,19 +24,18 @@ public class CSVConverter {
         //Initialize column names:
         //General image info
         builder.append("Img_name,Size,Noise,Focus,Contrast,");
-        //Sobel columns
-        builder.append("");
-        //Prewitt_2K columns
-        builder.append("");
-        //Prewitt_4K columns
-        builder.append("");
-        //Roberts columns
-        builder.append("");
-        //Laplacian columns
-        builder.append("");
-        //Canny columns
-        builder.append("");
 
+        //Get all algorithms used
+        for(AlgorithmParameters algorithm : params.get(0).getAlgorithms()){
+            //Get name of the algorithm and use it as a prefix
+            String prefix = algorithm.getName();
+            builder.append(prefix).append("_time,");
+            builder.append(prefix).append("_edges,");
+            builder.append(prefix).append("_performanceFactor,");
+        }
+
+        //Remove trailing comma
+        builder.deleteCharAt(builder.length()-1);
         //Add columns info to csv file.
         data.add(builder.toString());
 
@@ -47,19 +47,22 @@ public class CSVConverter {
             builder.setLength(0);
 
             //Image Data
-            builder.append("");
-            //Sobel Data
-            builder.append("");
-            //Prewitt_2K Data
-            builder.append("");
-            //Prewitt_4K Data
-            builder.append("");
-            //Roberts Data
-            builder.append("");
-            //Laplacian Data
-            builder.append("");
-            //Canny Data
-            builder.append("");
+            builder.append(img.getName()+",");
+
+            for(AlgorithmParameters algorithm : img.getAlgorithms()){
+                //Sobel Data
+                builder.append("");
+                //Prewitt_2K Data
+                builder.append("");
+                //Prewitt_4K Data
+                builder.append("");
+                //Roberts Data
+                builder.append("");
+                //Laplacian Data
+                builder.append("");
+                //Canny Data
+                builder.append("");
+            }
 
             //Add a row of data
             data.add(builder.toString());
