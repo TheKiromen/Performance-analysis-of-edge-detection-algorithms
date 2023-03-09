@@ -71,7 +71,6 @@ public class CSVConverter {
 
     public void saveCSVDataToFile(File outputFile, List<String> data) throws IOException {
         try (PrintWriter pw = new PrintWriter(outputFile)) {
-            //TODO test if this works good
             data.stream().forEach(pw::println);
         }
     }

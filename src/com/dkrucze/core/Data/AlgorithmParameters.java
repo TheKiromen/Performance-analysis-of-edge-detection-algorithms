@@ -3,7 +3,7 @@ package com.dkrucze.core.Data;
 public class AlgorithmParameters {
     /** Name of edge detection algorithm used */
     private String name;
-    /** Time of processing in ms divided by image size */
+    /** Time of processing in ms divided */
     private double time;
     /** Amount of edged detected, 0-127.5 Higher value means more edges detected */
     private double edges;
