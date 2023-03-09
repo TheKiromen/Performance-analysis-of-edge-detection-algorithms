@@ -47,23 +47,21 @@ public class CSVConverter {
             builder.setLength(0);
 
             //Image Data
-            builder.append(img.getName()+",");
+            builder.append(img.getName()).append(",");
+            builder.append(img.getSize()).append(",");
+            builder.append(img.getNoise()).append(",");
+            builder.append(img.getFocus()).append(",");
+            builder.append(img.getContrast()).append(",");
 
+            //Algorithms Data
             for(AlgorithmParameters algorithm : img.getAlgorithms()){
-                //Sobel Data
-                builder.append("");
-                //Prewitt_2K Data
-                builder.append("");
-                //Prewitt_4K Data
-                builder.append("");
-                //Roberts Data
-                builder.append("");
-                //Laplacian Data
-                builder.append("");
-                //Canny Data
-                builder.append("");
+                builder.append(algorithm.getTime()).append(",");
+                builder.append(algorithm.getEdges()).append(",");
+                builder.append(algorithm.getPerformanceFactor()).append(",");
             }
 
+            //Remove trailing comma
+            builder.deleteCharAt(builder.length()-1);
             //Add a row of data
             data.add(builder.toString());
         }
