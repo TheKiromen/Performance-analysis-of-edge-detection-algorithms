@@ -7,8 +7,6 @@ public class AlgorithmParameters {
     private double time;
     /** Amount of edged detected, 0-127.5 Higher value means more edges detected */
     private double edges;
-    /** Overall performance of the algorithm on given image */
-    private double performanceFactor;
 
     @Override
     public String toString() {
@@ -16,15 +14,13 @@ public class AlgorithmParameters {
                 "name='" + name + '\'' +
                 ", time=" + time +
                 ", edges=" + edges +
-                ", performanceFactor=" + performanceFactor +
                 '}';
     }
 
-    public AlgorithmParameters(String name, double time, double edges, double performanceFactor) {
+    public AlgorithmParameters(String name, double time, double edges) {
         this.name = name;
         this.time = time;
         this.edges = edges;
-        this.performanceFactor = performanceFactor;
     }
 
     public String getName() {
@@ -51,11 +47,4 @@ public class AlgorithmParameters {
         this.edges = edges;
     }
 
-    public double getPerformanceFactor() {
-        return performanceFactor;
-    }
-
-    public void setPerformanceFactor(double performanceFactor) {
-        this.performanceFactor = performanceFactor;
-    }
 }

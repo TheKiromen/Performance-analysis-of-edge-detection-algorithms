@@ -42,9 +42,8 @@ public class Analyzer {
         /*
             time - how many milliseconds it takes to perform edge detection
             edges - standard deviation of image after edge detection
-            performance factor = (edges*contrast)/(time*noise*focus)
          */
-        double time,edges,performanceFactor;
+        double time,edges;
         //------------------------------------Algorithm outputs
         //Edges
         MatOfDouble stDev = new MatOfDouble();
@@ -73,10 +72,8 @@ public class Analyzer {
         //Calculate the amount of detected edges
         Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
         edges=stDev.get(0,0)[0];
-        //Calculate the overall performance of the algorithm
-        performanceFactor=(edges*imgData.getContrast())/(time*imgData.getNoise()*imgData.getFocus());
         //Save the results
-        imgData.getAlgorithms().add(new AlgorithmParameters("Sobel",time,edges,performanceFactor));
+        imgData.getAlgorithms().add(new AlgorithmParameters("Sobel",time,edges));
 
 
         //-----------------------------------------------Prewitt_2K-----------------------------------------------
@@ -92,10 +89,8 @@ public class Analyzer {
         //Calculate the amount of detected edges
         Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
         edges=stDev.get(0,0)[0];
-        //Calculate the overall performance of the algorithm
-        performanceFactor=(edges*imgData.getContrast())/(time*imgData.getNoise()*imgData.getFocus());
         //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("Prewitt_2K",time,edges,performanceFactor));
+        imgData.getAlgorithms().add(new AlgorithmParameters("Prewitt_2K",time,edges));
 
 
         //-----------------------------------------------Prewitt_4K-----------------------------------------------
@@ -115,10 +110,8 @@ public class Analyzer {
         //Calculate the amount of detected edges
         Core.meanStdDev(prewitt_straight,new MatOfDouble(), stDev);
         edges=stDev.get(0,0)[0];
-        //Calculate the overall performance of the algorithm
-        performanceFactor=(edges*imgData.getContrast())/(time*imgData.getNoise()*imgData.getFocus());
         //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("Prewitt_4K",time,edges,performanceFactor));
+        imgData.getAlgorithms().add(new AlgorithmParameters("Prewitt_4K",time,edges));
 
 
         //-----------------------------------------------Roberts-----------------------------------------------
@@ -134,10 +127,8 @@ public class Analyzer {
         //Calculate the amount of detected edges
         Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
         edges=stDev.get(0,0)[0];
-        //Calculate the overall performance of the algorithm
-        performanceFactor=(edges*imgData.getContrast())/(time*imgData.getNoise()*imgData.getFocus());
         //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("Roberts",time,edges,performanceFactor));
+        imgData.getAlgorithms().add(new AlgorithmParameters("Roberts",time,edges));
 
 
         //-----------------------------------------------Laplacian Of Gaussian-----------------------------------------------
@@ -150,9 +141,7 @@ public class Analyzer {
         //Calculate the amount of detected edges
         Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
         edges=stDev.get(0,0)[0];
-        //Calculate the overall performance of the algorithm
-        performanceFactor=(edges*imgData.getContrast())/(time*imgData.getNoise()*imgData.getFocus());
-        imgData.getAlgorithms().add(new AlgorithmParameters("Laplacian Of Gaussian",time,edges,performanceFactor));
+        imgData.getAlgorithms().add(new AlgorithmParameters("Laplacian Of Gaussian",time,edges));
 
 
         //-----------------------------------------------Canny-----------------------------------------------
@@ -171,10 +160,8 @@ public class Analyzer {
         //Calculate the amount of detected edges
         Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
         edges=stDev.get(0,0)[0];
-        //Calculate the overall performance of the algorithm
-        performanceFactor=(edges*imgData.getContrast())/(time*imgData.getNoise()*imgData.getFocus());
         //Save the results
-        imgData.getAlgorithms().add(new AlgorithmParameters("Canny",time,edges,performanceFactor));
+        imgData.getAlgorithms().add(new AlgorithmParameters("Canny",time,edges));
 
         //Save the image for testing purposes
         Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);

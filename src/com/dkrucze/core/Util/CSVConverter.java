@@ -31,7 +31,6 @@ public class CSVConverter {
             String prefix = algorithm.getName();
             builder.append(prefix).append("_time,");
             builder.append(prefix).append("_edges,");
-            builder.append(prefix).append("_performanceFactor,");
         }
 
         //Remove trailing comma
@@ -57,7 +56,6 @@ public class CSVConverter {
             for(AlgorithmParameters algorithm : img.getAlgorithms()){
                 builder.append(algorithm.getTime()).append(",");
                 builder.append(algorithm.getEdges()).append(",");
-                builder.append(algorithm.getPerformanceFactor()).append(",");
             }
 
             //Remove trailing comma
