@@ -44,6 +44,11 @@ public class MainClass {
             //-----------------------------Image size-----------------------------
             parameters.setSize(img.width()*img.height());
 
+            //TODO implement MSE
+            //-----------------------------Image error-----------------------------
+            parameters.setError(0);
+
+            //FIXME change it to PSNR
             //-----------------------------Image noise-----------------------------
             //Variables for noise calculation
             MatOfDouble sourceStdDev = new MatOfDouble();
