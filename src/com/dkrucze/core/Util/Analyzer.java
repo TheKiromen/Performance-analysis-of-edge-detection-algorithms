@@ -6,6 +6,9 @@ import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.opencv.core.CvType.CV_32F;
 
 
@@ -164,7 +167,7 @@ public class Analyzer {
         imgData.getAlgorithms().add(new AlgorithmParameters("Canny",time,edges));
 
         //Save the image for testing purposes
-        // Imgcodecs.imwrite("images/outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);
+        // Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);
 
 
         //-----------------------------------------------Hough-lines-----------------------------------------------
@@ -176,7 +179,7 @@ public class Analyzer {
         //Detect the lines
         Imgproc.HoughLinesP(imgEdges, lines, 1, Math.PI/180, 50, 50, 10);
         // Draw the lines
-        imgEdges = new Mat(sourceImage.height(), sourceImage.width(), CV_32F);
+        imgEdges = new Mat(sourceImage.rows(), sourceImage.cols(), CV_32F);
         for (int i = 0; i < lines.rows(); i++) {
             double[] l = lines.get(i, 0);
             Imgproc.line(imgEdges, new Point(l[0], l[1]), new Point(l[2], l[3]), new Scalar(255,0,0), 1, Imgproc.LINE_AA, 0);
@@ -190,7 +193,7 @@ public class Analyzer {
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Hough-lines",time,edges));
 
-        // Imgcodecs.imwrite("images/outputImgs/"+imgData.getName(), imgEdges);
+        // Imgcodecs.imwrite("outputImgs/"+imgData.getName(), imgEdges);
 
 
         // //-----------------------------------------------Hough-circles-----------------------------------------------
@@ -232,12 +235,30 @@ public class Analyzer {
         // imgData.getAlgorithms().add(new AlgorithmParameters("Hough-combined",time,edges));
 
 
+        //-----------------------------------------------Contours-----------------------------------------------
+        //Start time measurement
+        time=System.nanoTime();
+        //Perform binary thresholding
+        Mat binary =  new Mat(sourceImage.rows(), sourceImage.cols(), sourceImage.type(), new Scalar(0));
+        Imgproc.threshold(sourceImage, binary, 100, 255, Imgproc.THRESH_BINARY);
+        //Find contours of the image
+        List<MatOfPoint> contours = new ArrayList<>();
+        Imgproc.findContours(binary, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+        //Draw the contours
+        imgEdges = new Mat(sourceImage.rows(), sourceImage.cols(), CV_32F);
+        Imgproc.drawContours(imgEdges, contours, -1, new Scalar(255,255,255), 1);
+        //Finish time measurement
+        time=(System.nanoTime()-time)/1000000.0;
+        //Calculate the amount of detected edges
+        Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
+        edges=stDev.get(0,0)[0];
+        //Save the result
+        imgData.getAlgorithms().add(new AlgorithmParameters("Contours",time,edges));
+
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName(), imgEdges);
+
         //-----------------------------------------------High pass filter-----------------------------------------------
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("High pass filter",time,edges));
-
-        //-----------------------------------------------Contours-----------------------------------------------
-        //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("Contours",time,edges));
     }
 }
