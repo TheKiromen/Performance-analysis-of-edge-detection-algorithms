@@ -164,6 +164,48 @@ public class Analyzer {
         imgData.getAlgorithms().add(new AlgorithmParameters("Canny",time,edges));
 
         //Save the image for testing purposes
-        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);
+        // Imgcodecs.imwrite("images/outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);
+
+
+        //-----------------------------------------------Hough-lines-----------------------------------------------
+        double cannyTime = time;
+        //Start time measurement
+        time=System.nanoTime();
+        //Variable to hold lines
+        Mat lines = new Mat();
+        //Detect the lines
+        Imgproc.HoughLinesP(imgEdges, lines, 1, Math.PI/180, 50, 50, 10);
+        imgEdges = new Mat(sourceImage.height(), sourceImage.width(), CV_32F);
+        //Finish time measurement
+        time=(System.nanoTime()-time)/1000000.0;
+        time+=cannyTime;
+        //Calculate the amount of detected edges
+        Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
+        edges=stDev.get(0,0)[0];
+        //Save the result
+        imgData.getAlgorithms().add(new AlgorithmParameters("Hough-lines",time,edges));
+
+        // Draw the lines
+        for (int i = 0; i < lines.rows(); i++) {
+            double[] l = lines.get(i, 0);
+            Imgproc.line(imgEdges, new Point(l[0], l[1]), new Point(l[2], l[3]), new Scalar(255,0,0), 1, Imgproc.LINE_AA, 0);
+        }
+        Imgcodecs.imwrite("images/outputImgs/"+imgData.getName(), imgEdges);
+
+
+        //-----------------------------------------------Hough-circles-----------------------------------------------
+
+        //Save the result
+        imgData.getAlgorithms().add(new AlgorithmParameters("Hough-circles",0,0));
+
+
+        //-----------------------------------------------Hough-combined-----------------------------------------------
+        //Save the result
+        imgData.getAlgorithms().add(new AlgorithmParameters("Hough-combined",0,0));
+
+
+        //-----------------------------------------------High pass filter-----------------------------------------------
+        //Save the result
+        imgData.getAlgorithms().add(new AlgorithmParameters("High pass filter",0,0));
     }
 }

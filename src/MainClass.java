@@ -1,4 +1,3 @@
-import com.dkrucze.core.Data.AlgorithmParameters;
 import com.dkrucze.core.Data.ImageParameters;
 import com.dkrucze.core.Util.Analyzer;
 import com.dkrucze.core.Util.CSVConverter;
@@ -21,6 +20,8 @@ public class MainClass {
     public static void main(String[] args) {
         //Variables
         ArrayList<ImageParameters> outputData = new ArrayList<>();
+        Mat noise_kernel = new Mat(3,3, CvType.CV_32F);
+        noise_kernel.put(0,0,1,-2,1,-2,4,-2,1,-2,1);
 
         //Load all the images from images folder
         ArrayList<String> imagesPaths = ImageLoader.loadFiles("images");
@@ -45,22 +46,28 @@ public class MainClass {
             parameters.setSize(img.width()*img.height());
 
             //-----------------------------Image noise-----------------------------
-            //Variables for noise calculation
-            MatOfDouble sourceStdDev = new MatOfDouble();
-            MatOfDouble smoothStdDev = new MatOfDouble();
-
-            //Blur the source image
-            Imgproc.blur(img,tmp,new Size(5,5));
-
-            //Calculate the standard deviation of source and blurred image
-            Core.meanStdDev(img,new MatOfDouble(),sourceStdDev);
-            Core.meanStdDev(tmp,new MatOfDouble(),smoothStdDev);
-
-            //Calculate the noise by comparing both deviations
-            //More noise = higher deviation
-            double noise = sourceStdDev.get(0,0)[0]/smoothStdDev.get(0,0)[0];
+            //Convolve with kernel
+            Imgproc.filter2D(img, tmp, -1, noise_kernel);
+            //Get sum of the elements
+            double sum = Core.sumElems(tmp).val[0];
+            //Calculate the noise
+            double noise = Math.sqrt(Math.PI/2)*(sum/(6*(img.width()-2)*(img.height()-2)));
             //Save the result
             parameters.setNoise(noise);
+            //Variables for noise calculation
+            // MatOfDouble sourceStdDev = new MatOfDouble();
+            // MatOfDouble smoothStdDev = new MatOfDouble();
+            //
+            // //Blur the source image
+            // Imgproc.blur(img,tmp,new Size(5,5));
+            //
+            // //Calculate the standard deviation of source and blurred image
+            // Core.meanStdDev(img,new MatOfDouble(),sourceStdDev);
+            // Core.meanStdDev(tmp,new MatOfDouble(),smoothStdDev);
+            //
+            // //Calculate the noise by comparing both deviations
+            // //More noise = higher deviation
+            // double noise = sourceStdDev.get(0,0)[0]/smoothStdDev.get(0,0)[0];
 
             //-----------------------------Image focus-----------------------------
             //Convolve image with Laplacian
@@ -72,6 +79,9 @@ public class MainClass {
             parameters.setFocus(focus.get(0,0)[0]);
 
             //-----------------------------Image contrast-----------------------------
+            MatOfDouble sourceStdDev = new MatOfDouble();
+            //Get standard deviation of the source image
+            Core.meanStdDev(img,new MatOfDouble(),sourceStdDev);
             //Calculate the RMS contrast and normalize it
             //RMS contrast is the same as standard deviation of colors
             //Maximum value is 127.5 which is half of the spectrum
