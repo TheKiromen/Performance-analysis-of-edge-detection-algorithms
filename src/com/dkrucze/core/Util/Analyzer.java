@@ -164,23 +164,6 @@ public class Analyzer {
         imgData.getAlgorithms().add(new AlgorithmParameters("Canny",time,edges));
 
         //Save the image for testing purposes
-        // Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);
-
-
-        //-----------------------------------------------Hough-lines-----------------------------------------------
-        //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("Hough-lines",0,0));
-
-        //-----------------------------------------------Hough-circles-----------------------------------------------
-        //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("Hough-circles",0,0));
-
-        //-----------------------------------------------Hough-combined-----------------------------------------------
-        //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("Hough-combined",0,0));
-
-        //-----------------------------------------------High pass filter-----------------------------------------------
-        //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("High pass filter",0,0));
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);
     }
 }

@@ -7,13 +7,11 @@ public class ImageParameters {
     private String name;
     /** Number of pixels in the image */
     private int size;
-    /** Error of the image calculated as MSE */
-    private double error;
-    /** Peak Signal to Noise Ratio, describes how much noise affects the image. */
+    /** Amount of noise in image, value starts from 1. Higher value means more noise. */
     private double noise;
-    /** Sharpness of the image, higher number means sharper image. Range is 0-127.5, Calculated as Variance of Laplace */
+    /** Sharpness of the image, higher number means sharper image. Range is 0-127.5 */
     private double focus;
-    /** Contrast of the image, range from 0 to 1 , higher value means better contrast, Calculated as RMS Contrast */
+    /** Contrast of the image, range from 0 to 1 , higher value means better contrast*/
     private double contrast;
     /** Performance of different edge detection algorithms on this image */
     private ArrayList<AlgorithmParameters> algorithms;
@@ -30,12 +28,12 @@ public class ImageParameters {
                 '}';
     }
 
-    public ImageParameters(String name, int size, double noise, double error ,double focus, double contrast) {
+    public ImageParameters(String name, int size, double noise, double focus, double contrast) {
         this.name = name;
         this.size = size;
-        this.error = error;
         this.noise = noise;
         this.focus = focus;
+
         this.contrast = contrast;
         algorithms=new ArrayList<>();
     }
@@ -58,14 +56,6 @@ public class ImageParameters {
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    public double getError() {
-        return error;
-    }
-
-    public void setError(double error) {
-        this.error = error;
     }
 
     public double getNoise() {

@@ -23,7 +23,7 @@ public class CSVConverter {
 
         //Initialize column names:
         //General image info
-        builder.append("Img_name,Size,MSE,PSNR,Focus,Contrast,");
+        builder.append("Img_name,Size,Noise,Focus,Contrast,");
 
         //Get all algorithms used
         for(AlgorithmParameters algorithm : params.get(0).getAlgorithms()){
@@ -48,7 +48,6 @@ public class CSVConverter {
             //Image Data
             builder.append(img.getName()).append(",");
             builder.append(img.getSize()).append(",");
-            builder.append(img.getError()).append(",");
             builder.append(img.getNoise()).append(",");
             builder.append(img.getFocus()).append(",");
             builder.append(img.getContrast()).append(",");
