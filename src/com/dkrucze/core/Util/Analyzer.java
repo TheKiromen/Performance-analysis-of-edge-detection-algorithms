@@ -175,7 +175,12 @@ public class Analyzer {
         Mat lines = new Mat();
         //Detect the lines
         Imgproc.HoughLinesP(imgEdges, lines, 1, Math.PI/180, 50, 50, 10);
+        // Draw the lines
         imgEdges = new Mat(sourceImage.height(), sourceImage.width(), CV_32F);
+        for (int i = 0; i < lines.rows(); i++) {
+            double[] l = lines.get(i, 0);
+            Imgproc.line(imgEdges, new Point(l[0], l[1]), new Point(l[2], l[3]), new Scalar(255,0,0), 1, Imgproc.LINE_AA, 0);
+        }
         //Finish time measurement
         time=(System.nanoTime()-time)/1000000.0;
         time+=cannyTime;
@@ -185,27 +190,54 @@ public class Analyzer {
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Hough-lines",time,edges));
 
-        // Draw the lines
-        for (int i = 0; i < lines.rows(); i++) {
-            double[] l = lines.get(i, 0);
-            Imgproc.line(imgEdges, new Point(l[0], l[1]), new Point(l[2], l[3]), new Scalar(255,0,0), 1, Imgproc.LINE_AA, 0);
-        }
-        Imgcodecs.imwrite("images/outputImgs/"+imgData.getName(), imgEdges);
+        // Imgcodecs.imwrite("images/outputImgs/"+imgData.getName(), imgEdges);
 
 
-        //-----------------------------------------------Hough-circles-----------------------------------------------
+        // //-----------------------------------------------Hough-circles-----------------------------------------------
+        // linesTime = time;
+        // //Start time measurement
+        // time=System.nanoTime();
+        // //Variable to hold circles
+        // Mat circles = new Mat();
+        // //Detect the circles
+        // Imgproc.HoughCircles(sourceImage, circles, Imgproc.HOUGH_GRADIENT, 1.0, sourceImage.width()/16, 100, 30, 1, 100);
+        // imgEdges = new Mat(sourceImage.height(), sourceImage.width(), CV_32F);
+        // //Draw circles
+        // for (int i = 0; i < circles.cols(); i++) {
+        //     double[] c = circles.get(0, i);
+        //     Point center = new Point(Math.round(c[0]), Math.round(c[1]));
+        //     // circle center
+        //     Imgproc.circle(imgEdges, center, 1, new Scalar(0,100,100), 3, 8, 0 );
+        //     // circle outline
+        //     int radius = (int) Math.round(c[2]);
+        //     Imgproc.circle(imgEdges, center, radius, new Scalar(255,0,255), 3, 8, 0 );
+        // }
+        // //Finish time measurement
+        // time=(System.nanoTime()-time)/1000000.0;
+        // System.out.println(time);
+        // // time+=cannyTime;
+        // //Calculate the amount of detected edges
+        // Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
+        // edges=stDev.get(0,0)[0];
+        // //Save the result
+        // imgData.getAlgorithms().add(new AlgorithmParameters("Hough-circles",time,edges));
+        //
+        // Imgcodecs.imwrite("images/outputImgs/"+imgData.getName(), imgEdges);
 
-        //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("Hough-circles",0,0));
 
-
-        //-----------------------------------------------Hough-combined-----------------------------------------------
-        //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("Hough-combined",0,0));
+        // //-----------------------------------------------Hough-combined-----------------------------------------------
+        // circlesTime = time;
+        //
+        // //Save the result
+        // imgData.getAlgorithms().add(new AlgorithmParameters("Hough-combined",time,edges));
 
 
         //-----------------------------------------------High pass filter-----------------------------------------------
         //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("High pass filter",0,0));
+        imgData.getAlgorithms().add(new AlgorithmParameters("High pass filter",time,edges));
+
+        //-----------------------------------------------Contours-----------------------------------------------
+        //Save the result
+        imgData.getAlgorithms().add(new AlgorithmParameters("Contours",time,edges));
     }
 }
