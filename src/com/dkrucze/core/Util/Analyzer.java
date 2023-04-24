@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.opencv.core.CvType.CV_32F;
+import static org.opencv.core.CvType.CV_8UC1;
 
 
 public class Analyzer {
@@ -255,10 +256,86 @@ public class Analyzer {
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Contours",time,edges));
 
-        Imgcodecs.imwrite("outputImgs/"+imgData.getName(), imgEdges);
+        // Imgcodecs.imwrite("outputImgs/"+imgData.getName(), imgEdges);
 
         //-----------------------------------------------High pass filter-----------------------------------------------
-        //Save the result
-        imgData.getAlgorithms().add(new AlgorithmParameters("High pass filter",time,edges));
+        // //Start time measurement
+        // time=System.nanoTime();
+        // //Variables
+        // Mat complexImage = new Mat();
+        // Mat padded = new Mat();
+        // List<Mat> planes = new ArrayList<>();
+        // //Get optimal image dimensions for dft
+        // int addPixelRows = Core.getOptimalDFTSize(sourceImage.rows());
+        // int addPixelCols = Core.getOptimalDFTSize(sourceImage.cols());
+        // //Expand image to optimal size by adding black border
+        // Core.copyMakeBorder(sourceImage, padded, 0, addPixelRows - sourceImage.rows(), 0, addPixelCols - sourceImage.cols(),Core.BORDER_CONSTANT, Scalar.all(0));
+        // //Create place to store complex and real values
+        // padded.convertTo(padded, CvType.CV_32F);
+        // planes.add(padded);
+        // planes.add(Mat.zeros(padded.size(), CvType.CV_32F));
+        // Core.merge(planes, complexImage);
+        // //Perform the dft
+        // Core.dft(complexImage, complexImage);
+        // //Optimize magnitude
+        // List<Mat> newPlanes = new ArrayList<>();
+        // Mat magnitude = new Mat();
+        // //Split the complex image in two planes
+        // Core.split(complexImage, newPlanes);
+        // //Compute the magnitude
+        // Core.magnitude(newPlanes.get(0), newPlanes.get(1), magnitude);
+        // //Move to a logarithmic scale
+        // Core.add(Mat.ones(magnitude.size(), CvType.CV_32F), magnitude, magnitude);
+        // Core.log(magnitude, magnitude);
+        // //Rearrange the 4 quadrants of the magnitude image (move zero to the center of the image)
+        // magnitude = magnitude.submat(new Rect(0, 0, magnitude.cols() & -2, magnitude.rows() & -2));
+        // int cx = magnitude.cols() / 2;
+        // int cy = magnitude.rows() / 2;
+        // //Quadrants
+        // Mat q0 = new Mat(magnitude, new Rect(0, 0, cx, cy));
+        // Mat q1 = new Mat(magnitude, new Rect(cx, 0, cx, cy));
+        // Mat q2 = new Mat(magnitude, new Rect(0, cy, cx, cy));
+        // Mat q3 = new Mat(magnitude, new Rect(cx, cy, cx, cy));
+        // //Rearrange
+        // Mat tmp = new Mat();
+        // q0.copyTo(tmp);
+        // q3.copyTo(q0);
+        // tmp.copyTo(q3);
+        // q1.copyTo(tmp);
+        // q2.copyTo(q1);
+        // tmp.copyTo(q2);
+        // //Normalize the magnitude image for the visualization since both JavaFX
+        // //and OpenCV need images with value between 0 and 255, convert back to CV_8UC1
+        // magnitude.convertTo(magnitude, CvType.CV_8UC1);
+        // Core.normalize(magnitude, magnitude, 0, 255, Core.NORM_MINMAX, CvType.CV_8UC1);
+        //
+        // List<Mat> maskPlanes = new ArrayList<>();
+        // Core.split(complexImage, maskPlanes);
+        // // Mat mask = new Mat();
+        // // maskPlanes.add(Mat.zeros(padded.size(), CvType.CV_32F));
+        // // maskPlanes.add(Mat.zeros(padded.size(), CvType.CV_32F));
+        // // Core.merge(maskPlanes, mask);
+        // System.out.println(Core.minMaxLoc(maskPlanes.get(0)).maxVal);
+        // maskPlanes.get(0).matMul(Mat.ones(padded.size(), padded.type()));
+        // // maskPlanes.get(0).mul(Mat.ones(padded.size(), padded.type()));
+        // // maskPlanes.get(1).mul(Mat.ones(padded.size(), padded.type()));
+        // System.out.println(Core.minMaxLoc(maskPlanes.get(0)).maxVal);
+        //
+        // Core.merge(maskPlanes, complexImage);
+        //
+        // //Inverse the dft
+        // Core.idft(complexImage, complexImage);
+        // Mat restoredImage = new Mat();
+        // Core.split(complexImage, planes);
+        // Core.normalize(planes.get(0), restoredImage, 0, 255, Core.NORM_MINMAX);
+        //
+        // //Calculate the amount of detected edges
+        // Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
+        // edges=stDev.get(0,0)[0];
+        // //Save the result
+        // imgData.getAlgorithms().add(new AlgorithmParameters("High pass filter",time,edges));
+        //
+        // // Imgcodecs.imwrite("outputImgs/"+imgData.getName(), magnitude);
+        // Imgcodecs.imwrite("outputImgs/"+imgData.getName(), restoredImage);
     }
 }
