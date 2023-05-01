@@ -44,6 +44,7 @@ public class MainClass {
             MatOfDouble stDev = new MatOfDouble();
             Core.meanStdDev(img, new MatOfDouble(), stDev);
             System.out.println(stDev.get(0, 0)[0]);
+            // System.out.println(parameters.getName()+ " : " +stDev.get(0, 0)[0]);
 
             //     //Calculate image properties
             //     //-----------------------------Image size-----------------------------
