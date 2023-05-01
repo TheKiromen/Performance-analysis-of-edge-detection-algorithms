@@ -191,6 +191,8 @@ public class Analyzer {
         //Calculate the amount of detected edges
         Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
         edges=stDev.get(0,0)[0];
+        //FIXME
+        // System.out.println(imgData.getName() + " | " + edges);
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Hough-lines",time,edges));
 
@@ -252,11 +254,13 @@ public class Analyzer {
         time=(System.nanoTime()-time)/1000000.0;
         //Calculate the amount of detected edges
         Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
+        //FIXME
         edges=stDev.get(0,0)[0];
+        System.out.println(imgData.getName() + " | " + edges);
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Contours",time,edges));
 
-        // Imgcodecs.imwrite("outputImgs/"+imgData.getName(), imgEdges);
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName(), imgEdges);
 
         //-----------------------------------------------High pass filter-----------------------------------------------
         // //Start time measurement
