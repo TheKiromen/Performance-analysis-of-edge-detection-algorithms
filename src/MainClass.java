@@ -24,7 +24,7 @@ public class MainClass {
         noise_kernel.put(0,0,1,-2,1,-2,4,-2,1,-2,1);
 
         //Load all the images from images folder
-        ArrayList<String> imagesPaths = ImageLoader.loadFiles("images/Blur");
+        ArrayList<String> imagesPaths = ImageLoader.loadFiles("images/TID2013");
 
         //For each image calculate its parameters
         for (String path : imagesPaths) {

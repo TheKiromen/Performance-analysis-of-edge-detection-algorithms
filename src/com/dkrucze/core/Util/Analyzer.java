@@ -112,10 +112,12 @@ public class Analyzer {
         //Finish time measurement
         time=(System.nanoTime()-time)/1000000.0;
         //Calculate the amount of detected edges
-        Core.meanStdDev(prewitt_straight,new MatOfDouble(), stDev);
+        Core.meanStdDev(imgEdges,new MatOfDouble(), stDev);
         edges=stDev.get(0,0)[0];
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Prewitt_4K",time,edges));
+
+        System.out.println(edges);
 
 
         //-----------------------------------------------Roberts-----------------------------------------------
