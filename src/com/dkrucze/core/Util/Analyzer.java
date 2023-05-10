@@ -96,6 +96,8 @@ public class Analyzer {
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Prewitt_2K",time,edges));
 
+        // Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Prewitt2K.jpg", imgEdges);
+
 
         //-----------------------------------------------Prewitt_4K-----------------------------------------------
         //Start time measurement
@@ -117,17 +119,17 @@ public class Analyzer {
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Prewitt_4K",time,edges));
 
-        System.out.println(edges);
-
+        // System.out.println(edges);
+        // Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Prewitt4K.jpg", imgEdges);
 
         //-----------------------------------------------Roberts-----------------------------------------------
         //Start time measurement
         time=System.nanoTime();
         //Convolve the image
-        Imgproc.filter2D(sourceImage,x,-1,prewitt_kernel_x);
-        Imgproc.filter2D(sourceImage,y,-1,prewitt_kernel_y);
+        Imgproc.filter2D(sourceImage,x,-1,roberts_kernel_x);
+        Imgproc.filter2D(sourceImage,y,-1,roberts_kernel_y);
         //Calculate the gradient
-        Core.addWeighted(x,0.5,y,0.5,0,imgEdges);
+        Core.addWeighted(x,1,y,1,0,imgEdges);
         //Finish time measurement
         time=(System.nanoTime()-time)/1000000.0;
         //Calculate the amount of detected edges
@@ -135,6 +137,10 @@ public class Analyzer {
         edges=stDev.get(0,0)[0];
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Roberts",time,edges));
+
+        System.out.println(edges);
+
+        // Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Roberts.jpg", imgEdges);
 
 
         //-----------------------------------------------Laplacian Of Gaussian-----------------------------------------------
