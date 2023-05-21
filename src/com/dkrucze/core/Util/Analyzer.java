@@ -79,6 +79,7 @@ public class Analyzer {
         //Save the results
         imgData.getAlgorithms().add(new AlgorithmParameters("Sobel",time,edges));
 
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Sobel.jpg", imgEdges);
 
         //-----------------------------------------------Prewitt_2K-----------------------------------------------
         //Start time measurement
@@ -96,7 +97,7 @@ public class Analyzer {
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Prewitt_2K",time,edges));
 
-        // Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Prewitt2K.jpg", imgEdges);
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Prewitt2K.jpg", imgEdges);
 
 
         //-----------------------------------------------Prewitt_4K-----------------------------------------------
@@ -120,7 +121,7 @@ public class Analyzer {
         imgData.getAlgorithms().add(new AlgorithmParameters("Prewitt_4K",time,edges));
 
         // System.out.println(edges);
-        // Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Prewitt4K.jpg", imgEdges);
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Prewitt4K.jpg", imgEdges);
 
         //-----------------------------------------------Roberts-----------------------------------------------
         //Start time measurement
@@ -138,9 +139,9 @@ public class Analyzer {
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Roberts",time,edges));
 
-        System.out.println(edges);
+        // System.out.println(edges);
 
-        // Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Roberts.jpg", imgEdges);
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Roberts.jpg", imgEdges);
 
 
         //-----------------------------------------------Laplacian Of Gaussian-----------------------------------------------
@@ -155,6 +156,7 @@ public class Analyzer {
         edges=stDev.get(0,0)[0];
         imgData.getAlgorithms().add(new AlgorithmParameters("Laplacian Of Gaussian",time,edges));
 
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"LoG.jpg", imgEdges);
 
         //-----------------------------------------------Canny-----------------------------------------------
         //Start time measurement
@@ -176,7 +178,7 @@ public class Analyzer {
         imgData.getAlgorithms().add(new AlgorithmParameters("Canny",time,edges));
 
         //Save the image for testing purposes
-        // Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Canny.jpg", imgEdges);
 
 
         //-----------------------------------------------Hough-lines-----------------------------------------------
@@ -204,7 +206,7 @@ public class Analyzer {
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Hough-lines",time,edges));
 
-        // Imgcodecs.imwrite("outputImgs/"+imgData.getName(), imgEdges);
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Hough.jpg", imgEdges);
 
 
         // //-----------------------------------------------Hough-circles-----------------------------------------------
@@ -268,7 +270,7 @@ public class Analyzer {
         //Save the result
         imgData.getAlgorithms().add(new AlgorithmParameters("Contours",time,edges));
 
-        // Imgcodecs.imwrite("outputImgs/"+imgData.getName(), imgEdges);
+        Imgcodecs.imwrite("outputImgs/"+imgData.getName()+"Contours.jpg", imgEdges);
 
         //-----------------------------------------------High pass filter-----------------------------------------------
         // //Start time measurement
